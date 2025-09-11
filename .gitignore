@@ -47,3 +47,5 @@ target/
 
 # OS-specific files
 Thumbs.db
+
+.env
