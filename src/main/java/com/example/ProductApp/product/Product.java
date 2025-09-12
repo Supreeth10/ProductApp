@@ -34,6 +34,20 @@ public class Product {
 
     private Instant deletedAt;
 
+    public Product() {
+    }
+
+    public Product(UUID id, String name, String description, BigDecimal price, String imageUrl, Integer stockLevel) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.stockLevel = stockLevel;
+    }
+
+
+
     @PrePersist
     public void prePersist() {
         if(this.id == null){

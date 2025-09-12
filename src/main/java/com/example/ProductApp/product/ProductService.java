@@ -24,9 +24,23 @@ public class ProductService {
         ));
     }
 
-    public Product deleteProductById(UUID id) {
-        return productRepository.delete(.);
+    public void deleteProductById(UUID id) {
+        boolean exists = productRepository.existsById(id);
+        if(!exists){
+            throw new ResourceNotFound("Product with id [" + id + "] not found");
+        }
+        productRepository.deleteById(id);
+    }
 
-
+    public UUID saveNewProduct(NewProductRequest product) {
+      UUID id = UUID.randomUUID();
+      Product newProduct = new Product(
+              id,product.name(),
+              product.description(),
+              product.price(),
+              product.imageUrl(),
+              product.stockLevel());
+      productRepository.save(newProduct);
+      return id;
     }
 }

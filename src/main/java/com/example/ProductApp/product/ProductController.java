@@ -23,4 +23,14 @@ public class ProductController {
     public Product getProductById(@PathVariable("id") UUID id) {
         return productService.getProductById(id);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteProductById(@PathVariable("id") UUID id) {
+        productService.deleteProductById(id);
+    }
+
+    @PostMapping
+    public UUID saveProduct(@RequestBody NewProductRequest product) {
+       return productService.saveNewProduct(product);
+    }
 }
