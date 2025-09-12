@@ -11,7 +11,6 @@ import java.util.UUID;
 @Table(name = "product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false,length = 50)
@@ -37,6 +36,9 @@ public class Product {
 
     @PrePersist
     public void prePersist() {
+        if(this.id == null){
+            this.id = UUID.randomUUID();
+        }
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
