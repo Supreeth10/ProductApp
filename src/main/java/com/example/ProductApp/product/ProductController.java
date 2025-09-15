@@ -1,5 +1,6 @@
 package com.example.ProductApp.product;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,13 +31,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public UUID saveProduct(@RequestBody NewProductRequest product) {
+    public UUID saveProduct(@RequestBody @Valid NewProductRequest product) {
        return productService.saveNewProduct(product);
     }
 
     @PutMapping("/{id}")
     public void ProductResponse(@PathVariable("id") UUID id,
-                                           @RequestBody UpdateProductRequest request) {
+                                           @RequestBody @Valid UpdateProductRequest request) {
         productService.updateProduct(id,request);
 
     }
