@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -49,6 +50,29 @@ public class ProductService {
               product.stockLevel());
       productRepository.save(newProduct);
       return id;
+    }
+
+    public void updateProduct(UUID id, UpdateProductRequest updateRequest) {
+        Product product = productRepository.findById(id).orElseThrow(()-> new ResourceNotFound(
+                "Product with id [" + id + "] not found"
+        ));
+
+        if(updateRequest.name() != null && !updateRequest.name().equals(product.getName())){
+            product.setName(updateRequest.name());
+        }
+        if(updateRequest.description() != null && !updateRequest.description().equals(product.getDescription())){
+            product.setDescription(updateRequest.description());
+        }
+        if(updateRequest.price() != null && !updateRequest.price().equals(product.getPrice())){
+            product.setPrice(updateRequest.price());
+        }
+        if(updateRequest.imageUrl() != null && !updateRequest.imageUrl().equals(product.getImageUrl())){
+            product.setImageUrl(updateRequest.imageUrl());
+        }
+        if(updateRequest.stockLevel() != null && !updateRequest.stockLevel().equals(product.getStockLevel())){
+            product.setStockLevel(updateRequest.stockLevel());
+        }
+        productRepository.save(product);
     }
 
     private  Function<Product, ProductResponse> mapToResponse() {
